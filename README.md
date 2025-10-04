@@ -41,4 +41,22 @@ Run the focused tests:
 forge test --match-path test/Jurisdiction_Thresholds.t.sol -vv
 forge test --match-path test/MonthlyDigest.t.sol -vv
 forge test --match-path test/DualPoR_Divergence.t.sol -vv
+forge test --match-path test/TGUSD_SecurityFixes.t.sol -vv
 ```
+
+## Security Features
+
+### TGUSD Access Control
+- Owner-only functions for critical operations (setComplianceRegistry, setPaused, __testSet* functions)
+- Zero address validation on constructor and setter functions
+- Events emitted for all state changes (Transfer, Mint, Paused, Unpaused)
+
+### Pause/Unpause Mechanism
+- Contract can be paused and unpaused by owner via `setPaused(bool)`
+- Prevents permanent lockup in case of emergency
+- Auto-pauses on PoR divergence detection
+
+### Improved Divergence Handling
+- Properly decodes and validates `checkDivergence()` return value
+- Emits Paused event when auto-pause triggered by divergence
+

@@ -14,10 +14,8 @@ contract Jurisdiction_Thresholds is Test {
     TGUSD g; ComplianceRegistry comp; PoRMock2 por; TRMock2 tr;
 
     function setUp() public {
-        g = new TGUSD(); comp = new ComplianceRegistry(); por = new PoRMock2(); tr = new TRMock2();
-        g.__testSetCompliance(address(comp));
-        g.__testSetPoR(address(por));
-        g.__testSetTR(address(tr));
+        comp = new ComplianceRegistry(); por = new PoRMock2(); tr = new TRMock2();
+        g = new TGUSD(address(comp), address(tr), address(por));
         // seed profile: US sender
         IComplianceRegistryExtended.ComplianceProfile memory p = IComplianceRegistryExtended.ComplianceProfile({
             active:true,
